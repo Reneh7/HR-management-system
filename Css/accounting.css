@@ -1,0 +1,27 @@
+body{background-color: #FFEEBB ;}
+header{
+    display: flex; 
+    background-color: aquamarine;
+    padding: 20px;
+    justify-content: center;
+    }
+header a{
+    text-decoration: none;
+    color: black;
+    padding: 70px;
+    text-align: center;
+}
+.foot1{background-color: aquamarine;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex ;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding:20px}
+.foot1 a
+    {text-decoration: none;
+    color: black;
+    padding: 70px;
+    text-align: center;}
