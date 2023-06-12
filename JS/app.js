@@ -13,9 +13,27 @@ function Employee(id, name, department, level, img) {
 }
 
 Employee.prototype.renderEmployee = function () {
-    document.write(`<p>The employee name is ${this.fullName} and their salary is ${this.salary}</p>`);
-};
+       let div= document.getElementById("div1");
+       let div2= document.createElement("div");
+       div2.innerHTML= `
+       <div class="card-body">
+       <img src="${this.imageURL}" alt="Employee Image">
+           <h4>${this.fullName}</h4>
+           <p>ID: ${this.employeeID} - Department: ${this.departmentName} - Level: ${this.levelInfo} - <p>Salary: ${this.salary}</p>
+       </div> `;
+       div.appendChild(div2);
+    }
 
+Employee.prototype.calculateSalaryBasedOnLevel = function (){
+        const level = this.levelInfo;
+        if (level === "Senior") {
+            this.calculateSalary(1500, 2000);
+        } else if (level === "Mid-Senior") {
+            this.calculateSalary(1000, 1500);
+        } else if (level === "Junior") {
+            this.calculateSalary(500, 1000);
+        }
+    };
 Employee.prototype.calculateSalary = function (min, max) {
     this.salary = Math.floor(Math.random() * (max - min + 1) + min);
     this.calculateNetSalary();
@@ -25,26 +43,32 @@ Employee.prototype.calculateNetSalary = function () {
     this.netSalary = this.salary - (this.salary * 0.075);
 };
 
-let firstEmployee = new Employee(1000, "Ghazi Samer", "Administration", "Senior", "./Assets/profile.jpg");
-let secondEmployee = new Employee(1003, "Safi Walid", "Administration", "Mid-Senior");
-let thirdEmployee = new Employee(1005, "Rana Saleh", "Development", "Junior");
-
-for (let i = 0; i < Allemployees.length; i++) {
-    const employee = Allemployees[i];
-    const level = employee.levelInfo;
-
-    if (level === "Senior") {
-        employee.calculateSalary(1500, 2000);
-    } else if (level === "Mid-Senior") {
-        employee.calculateSalary(1000, 1500);
-    } else if (level === "Junior") {
-        employee.calculateSalary(500, 1000);
+Employee.prototype.IDnumbers=function(){
+    const usedNumbers = new Set();
+    while(this.employeeID.length < 4)
+    {
+        const digit=Math.floor(Math.random() * 10);
+        if(!usedNumbers.has(digit))
+        {
+            this.employeeID += digit;
+            usedNumbers.add(digit)
+        }
     }
-
-    employee.renderEmployee();
 }
 
-console.log(firstEmployee);
-console.log(secondEmployee);
-console.log(thirdEmployee);
-console.log(Allemployees);
+let form = document.getElementById("form1");
+form.addEventListener("submit", submitHandler);
+function submitHandler(event)
+ {  
+    event.preventDefault();
+    
+    let fullName= event.target.fname.value;
+    let department= event.target.departments.value;
+    let level= event.target.levels.value;
+    let image= event.target.img.value;
+    let newEmployee = new Employee('',fullName,department, level, image);
+    newEmployee.IDnumbers(); 
+    newEmployee.calculateSalaryBasedOnLevel();  
+    newEmployee.renderEmployee();
+ }
+
