@@ -70,5 +70,48 @@ function submitHandler(event)
     newEmployee.IDnumbers(); 
     newEmployee.calculateSalaryBasedOnLevel();  
     newEmployee.renderEmployee();
+    /* Allemployees.push(newEmployee); */
+    console.log(Allemployees);
+    saveData();
+    event.target.reset();
+ }
+ getData();
+
+ function saveData()
+ {
+   if(localStorage.getItem("Employees"))
+   {
+     localStorage.clear();
+     localStorage.setItem("Employees", JSON.stringify(Allemployees));
+   }
+   else {
+    localStorage.setItem("Employees", JSON.stringify(Allemployees));
+   }
+    
  }
 
+ function getData()
+ {
+    let retrivedArr = localStorage.getItem('Employees');
+    let objArr = JSON.parse(retrivedArr);
+    if (objArr != null) 
+    {
+        for (let i = 0; i < objArr.length; i++)
+        {
+           let newEmployee= new Employee(
+            objArr[i].employeeID,
+            objArr[i].fullName,
+            objArr[i].departmentName,
+            objArr[i].levelInfo,
+            objArr[i].imageURL);
+
+            newEmployee.IDnumbers();
+            newEmployee.calculateSalaryBasedOnLevel();
+            newEmployee.renderEmployee();
+            /* Allemployees.push(newEmployee); */
+        }
+        
+    }
+    
+ }
+ 
